@@ -1,4 +1,5 @@
 # users app을 따로 만들어서 회원가입, 로그인, 로그아웃 기능을 구현해보았다. 
+(project의 default app하나, diary(app), uesrs(app) # 추가..~ 
 # 회원가입과 로그인은 사용자가 입력하는것이기 때문에 form을 사용한다. 
 
 urls.py
