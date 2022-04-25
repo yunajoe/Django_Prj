@@ -1,0 +1,59 @@
+# email과 phone필드에 유효성 검사를 추가해줌
+forms.py 
+
+
+from logging import PlaceHolder
+from django import forms
+from django.contrib.auth.models import User
+from django.forms import ValidationError
+from .validators import check_email
+import re
+from django.core.validators import RegexValidator
+
+
+
+class SignUpForm(forms.ModelForm):
+      name = forms.CharField(label="이름",max_length=100)
+      username = forms.CharField(label='아이디 입력', min_length=5, max_length=150)
+      password1 = forms.CharField(label='비밀번호 입력', widget=forms.PasswordInput)
+      password2 = forms.CharField(label='비밀번호 확인', widget=forms.PasswordInput)
+      email = forms.EmailField(label="이메일 입력",widget=forms.EmailInput(attrs={'placeholder': 'abc@gmail.com형식으로 입력해주세요'}), validators=[check_email])
+      phone = forms.CharField(label="전화번호 입력",widget=forms.EmailInput(attrs={'placeholder': '012-3456-7890형식으로 입력해주세요'}))
+
+      class Meta:
+         model = User  # User 모델 불러옴
+         fields = "__all__"
+
+
+      def clean_email(self):
+            regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+            email = self.cleaned_data["email"]
+            if re.fullmatch(regex, email):
+                  return email
+            else:
+                  raise ValidationError("유효한 email형태가 아닙니다.")
+
+
+      def clean_phone(self):
+            regex = re.compile(r"[\d]{3}-[\d]{4}-[\d]{3}")
+            phone = self.cleaned_data["phone"]
+            if re.fullmatch(regex, phone):
+                  return phone
+            else:
+                  raise ValidationError("유효한 phone형태가 아닙니다.")
+
+
+
+
+
+class LoginForm(forms.ModelForm):
+      username = forms.CharField(label='아이디 입력', min_length=5, max_length=150)
+      password = forms.CharField(label='비밀번호 입력', widget=forms.PasswordInput)
+
+      class Meta:
+            model = User
+            fields = ['username', 'password']
+
+
+
+# sign.up html
