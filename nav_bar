@@ -145,4 +145,4 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
-문제는.. diary/diary_list/에서 main menu바로가기와 글쓰기 click이안됨.. 왜지?
+문제는.. diary/diary_list/에서 main menu바로가기와 글쓰기 click이 작동이 될지를 않는다.
