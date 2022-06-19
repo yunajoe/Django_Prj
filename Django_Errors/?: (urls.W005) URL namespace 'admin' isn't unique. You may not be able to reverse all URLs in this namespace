@@ -1,0 +1,13 @@
+
+?: (urls.W005) URL namespace 'admin' isn't unique. You may not be able to reverse all URLs in this namespace
+
+
+# 원인
+- django프로젝트의 하나의 app의 urls.py에    path('admin/', admin.site.urls)가 있는게 아니라
+다른 app의 urls.py에도 있을 때. 
+root app의 urls.py에만 남겨두고 삭제했더니 해결!
+
+urlpatterns = [
+    path('admin/', admin.site.urls) 
+    ....
+]
