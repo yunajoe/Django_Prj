@@ -1,0 +1,69 @@
+# 본 내용은 인프런 강의(리액트와 함꼐 장고 시작하기)를 토대로 작성하였습니다. 
+
+
+# 개발용 머신에서는 Anaconda Python 추천
+- 다양한 C/C++ 라이브러리 바이너리를 Anaconda 측에서 배포
+- 일반적인 파이썬 가상환경보다 강력한 Conda Environment
+
+
+--------------------------------------------------------------
+
+Anaconda는 설치되어 있으나 conda 환경변수를 path에 안 잡아줘서 cmd에서 conda 명령어가 실행되지 않았다.
++ 추가
+C:\Users\yunaj\anaconda3
+C:\Users\yunaj\anaconda3\Library
+C:\Users\yunaj\anaconda3\Scripts
+
+
+# python 버전 
+C:\Users\yunaj>python --version
+Python 3.8.8
+
+# pip 버전 
+C:\Users\yunaj>pip --version
+pip 20.2.3 from c:\users\yunaj\appdata\local\programs\python\python38\lib\site-packages\pip (python 3.8)
+
+# conda 버전 
+C:\Users\yunaj>conda --version
+conda 4.13.0
+
+# 가상환경 만들기
+
+C:\Users\yunaj>conda create --name django_env python=3.7
+
+
+conda activate django_env
+
+(django_env) C:\Users\yunaj>
+
+
+# django & 프로젝트 설치
+
+(django_env) C:\Users\yunaj>pip install "django~=3.0.0"
+
+(django_env) C:\Users\yunaj>django-admin --version
+3.0.14   
+
+(django_env) C:\Users\yunaj>cd \
+
+(django_env) C:\>mkdir Django_Project
+
+(django_env) C:\>cd Django_Project
+
+(django_env) C:\Django_Project>django-admin startproject myproject
+
+(django_env) C:\Django_Project\myproject>python manage.py migrate
+
+(django_env) C:\Django_Project\myproject>python manage.py createsuperuser
+
+(django_env) C:\Django_Project\myproject>python manage.py runserver
+'''
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 22, 2022 - 23:52:10
+Django version 3.0.14, using settings 'myproject.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+'''
