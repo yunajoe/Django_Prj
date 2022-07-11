@@ -1,0 +1,99 @@
+
+# 기본 파이썬 쉘로는 바로 장고 프로젝트의 리소스 (모델, 템플릿 등)를 활용하실 수 없습니다. 왜냐하면 장고 프로젝트 로딩 과정을 거치지 않았기 때문입니다. 장고 프로젝트가 로딩된 쉘을 획득하는 방법
+
+1. IPython
+2. Jupyter Notebook with Python Kernel
+3. BPython 
+(우선순위 ipython, bpythoh, jupyternotebook with python kernel)
+
+# 개발환경에서는 ipython shell 추천, 서비스 환경에서는 쉘을 띄우지 않는다. 
+
+-------------------------------------------------------------
+
+
+conda install ipython (conda install jupyter 하면은 jupyter notebook 설치 + ipython b/c jupyternotebook이 ipython을 사용하기 때문이당)
+
+nflearn_django> ipython
+Python 3.7.13 (default, Mar 28 2022, 08:03:21) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.31.1 -- An enhanced Interactive Python. Type '?' for help.
+
+-------------------------------------------------------------
+(django_env) PS C:\Django_Project\inflearn_django> python manage.py shell
+Python 3.7.13 (default, Mar 28 2022, 08:03:21) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.31.1 -- An enhanced Interactive Python. Type '?' for help.
+-------------------------------------------------------------
+# ipython에서는 아직 django 환경이 로딩이 되지 않았다
+(django_env) PS C:\Django_Project\inflearn_django> ipython
+from instagram.models import Post
+ImproperlyConfigured: Requested setting INSTALLED_APPS, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+
+-------------------------------------------------------------
+# 기본 python shell로 들어가보쟈 
+(django_env) PS C:\Django_Project\inflearn_django> python manage.py shell
+
+
+
+from instagram.models import Post
+In [2]: Post.objects.all()
+Out[2]: <QuerySet [<Post: 안녕안녕>, <Post: 오늘하루도화이티이이이잉>, <Post: 덥다..>, <Post: 하하하핳>, <Post: 오늘은 너무 피곤함미당>]>
+
+# manage.py 
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'inflearn_django.settings')
+
+
+In [2]: import os
+
+In [3]: os.environ
+
+In [4]: os.environ["DJANGO_SETTINGS_MODULE"] = "inflearn_django.settings"
+
+In [7]: os.environ["DJANGO_SETTINGS_MODULE"]
+Out[7]: 'inflearn_django.settings'
+
+In [8]: import django
+
+In [9]: django.setup()
+
+
+In [11]: from instagram.models import Post
+
+In [12]: Post.objects.all()
+Out[12]: <QuerySet [<Post: 안녕안녕>, <Post: 오늘하루도화이티이이이잉>, <Post: 덥다..>, <Post: 하하하핳>, <Post: 오늘은 너무 피곤함미당>]>       
+
+
+-------------------------------------------------------------
+jupyter notebook에서 import django하면은 no module이라고 계속 나옴 
+그래서 pip install django를 해주었떠니 already requirement라고 나옴 
+
+ipython shell에서 jupyter notebook을 하면은 실행은 되었다 --> 주피터 설치가 되었다는 말인데.
+
+그래서 그냥 다시 한번 
+conda install jupyter notebook 
+Requirement already..어쩌고 안 나오고 설치가 됨 (그럴수가있낭?)
+
+-------------------------------------------------------------
+
+# jupyter notebook
+
+import django
+import os
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "inflearn_django.settings"
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true" 
+django.setup()
+
+
+from instagram.models import Post
+qs = Post.objects.all()
+print(qs.query)
+
+
+
+SELECT "instagram_post"."id", "instagram_post"."message", "instagram_post"."photo", "instagram_post"."is_publish", "instagram_post"."created_at", "instagram_post"."updated_at" FROM "instagram_post"
+
+
+# 참고 https://docs.djangoproject.com/en/4.0/topics/async/
